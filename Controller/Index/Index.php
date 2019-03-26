@@ -10,8 +10,11 @@ use Magento\Framework\App\Config\Storage\WriterInterface;
 use Magento\Framework\App\ResponseInterface;
 use Wagento\Zendesk\Controller\AbstractOauth;
 use Wagento\Zendesk\Helper\Api\Connector;
+use Magento\Framework\App\CsrfAwareActionInterface;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\App\Request\InvalidRequestException;
 
-class Index extends AbstractOauth
+class Index extends AbstractOauth implements CsrfAwareActionInterface
 {
 
     /**
@@ -34,9 +37,26 @@ class Index extends AbstractOauth
         Context $context,
         Connector $connector
     ) {
-    
+
         parent::__construct($context);
         $this->connector = $connector;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function createCsrfValidationException(
+        RequestInterface $request
+    ): ?InvalidRequestException {
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function validateForCsrf(RequestInterface $request): ?bool
+    {
+        return true;
     }
 
     /**
