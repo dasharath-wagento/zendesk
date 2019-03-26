@@ -96,4 +96,5 @@ class Index extends AbstractOauth
         $hash = json_decode(base64_decode($hash), true);
         return is_array($hash) && isset($hash['client_id']) && isset($hash['subdomain']) && isset($hash['client_secret']);
     }
+
 }
